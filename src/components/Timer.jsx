@@ -140,7 +140,7 @@ function onSessionComplete(state) {
 
 function Timer() {
   const [openSettings, setOpenSettings] = useState(false);
-  const audioAlarmRef = useRef(new Audio('./src/assets/freesound_community-alarm-clock-short-6402-[AudioTrimmer.com].mp3'));
+  const audioAlarmRef = useRef(new Audio('./freesound_community-alarm-clock-short-6402-[AudioTrimmer.com].mp3'));
 
   const settings = {
     [WORK]: 0.1,

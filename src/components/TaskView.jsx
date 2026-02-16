@@ -50,7 +50,7 @@ export default function TaskView({ task, dispatch }) {
                         <TaskUpdateModal updateTaskValue={updateTaskValue} setUpdateTaskValue={setUpdateTaskValue} setError={setError} error={error}/>
                     </Modal>
                     <button className="btn p-0" onClick={handleDelete}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="hover-stroke-light">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" className="hover-stroke-light">
                             <polyline points="3,6 5,6 21,6"></polyline>
                             <path d="M19,6V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V6M8,6V4A2,2 0 0,1 10,2H14A2,2 0 0,1 16,4V6"></path>
                             <line x1="10" y1="11" x2="10" y2="17"></line>
