@@ -143,10 +143,10 @@ function Timer() {
   const audioAlarmRef = useRef(new Audio('./freesound_community-alarm-clock-short-6402-[AudioTrimmer.com].mp3'));
 
   const settings = {
-    [WORK]: 0.1,
-    [SHORT_BREAK]: 0.2,
-    [LONG_BREAK]: 0.3,
-    [LONG_BREAK_AFTER]: 2,
+    [WORK]: 25,
+    [SHORT_BREAK]: 5,
+    [LONG_BREAK]: 15,
+    [LONG_BREAK_AFTER]: 4,
     isContinuousCycle: true
   };
 
