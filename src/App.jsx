@@ -10,7 +10,7 @@ function App() {
         <div className='m-3 flex flex-1 flex-col gap-3 w-100'>
           <div className='d-flex w-100 gap-3 h-100'>
             <div id="task" className='flex-fill h-100' style={{ width: '35%' }}>
-              <div className='w-100 h-100 rounded-3 d-flex justify-content-center align-items-center card-background' >
+              <div className='w-100 h-100 rounded-3 d-flex card-background'>
                 <Task />
               </div>
             </div>

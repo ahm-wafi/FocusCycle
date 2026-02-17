@@ -40,6 +40,7 @@ const taskReducer = (state, action) => {
     }
     case ACTIONS.COMPLETE_TASK: {
       const completedTasks = state.tasks.map(task => task.id === action.payload.id ? { ...task, status: 'completed' } : task)
+      localStorage.setItem('tasks', JSON.stringify(completedTasks))
       return {
         ...state,
         tasks: completedTasks
@@ -48,6 +49,7 @@ const taskReducer = (state, action) => {
 
     case ACTIONS.PENDING_TASK:{
       const pendingTasks = state.tasks.map(task => task.id === action.payload.id ? { ...task, status: 'pending' } : task)
+      localStorage.setItem('tasks', JSON.stringify(pendingTasks))
       return {
         ...state,
         tasks: pendingTasks
@@ -65,20 +67,20 @@ function Task() {
   const [showCompletedTask, setShowCompletedTask] = useState(false)
 
   return (
-    <div className={`position-relative d-flex flex-column card-background w-100 h-100 rounded-3 ${ !showInputTask && state.tasks.filter(task => task.status === 'pending').length <= 0 || showCompletedTask && state.tasks.filter(task => task.status === 'completed').length <= 0 ? 'justify-content-center' : ''}`}>      
+    <div className={`position-relative d-flex flex-column card-background w-100 h-100 rounded-3 ${!showInputTask && state.tasks.filter(task => task.status === 'pending').length <= 0 || showCompletedTask && state.tasks.filter(task => task.status === 'completed').length <= 0 ? 'justify-content-center' : ''}`}>      
       {/* header */}
       <div className='d-flex w-100 mb-2'>
         <div className=' position-absolute d-flex flex-row gap-2 top-0 start-0 p-3 ' >
           <div className=' d-flex gap-2'>
             <button 
               className={`btn btn-sm primary-button-hover card-background ${!showCompletedTask ? 'primary-button text-white' : ''}`}
-              onClick={() => setShowCompletedTask(false)}
+              onClick={() => {setShowCompletedTask(false);}}
             >
-              Pending
+              Ongoing
             </button>
             <button 
               className={`btn btn-sm primary-button-hover card-background ${showCompletedTask ? 'primary-button text-white' : ''}`}
-              onClick={() => setShowCompletedTask(true)}
+              onClick={() => {setShowCompletedTask(true); setShowInputTask(false);}}
             >
               Completed
             </button>
@@ -87,7 +89,7 @@ function Task() {
       </div>
       {/* tasks */}
       
-      { !showInputTask && state.tasks.filter(task => task.status === 'pending').length <= 0 || showCompletedTask && state.tasks.filter(task => task.status === 'completed').length <= 0 ? (
+      { (showCompletedTask && state.tasks.filter(task => task.status === 'completed').length === 0) || (!showCompletedTask && !showInputTask && state.tasks.filter(task => task.status === 'pending').length === 0) ? (
         <div className="w-100 d-flex justify-content-center align-items-center flex-column">
           <div className=''>
             <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 16 16" fill="none" stroke='#9CA3AF' strokeWidth='0.6'  style={{opacity: 0.3}}>
@@ -98,21 +100,25 @@ function Task() {
           <div className='secondary-color' style={{opacity: 0.8}}> No tasks found </div>
           <button onClick={() => {setShowCompletedTask(false); setShowInputTask(true)}} className="btn secondary-color text-decoration-underline">Add a new task</button>
         </div>
-      ) :
-      (
-        <div className='w-100 d-flex flex-column gap-2' style={{ marginTop: '45px' }}>
-          <div className='d-flex flex-column flex-grow-1 align-items-center justify-content-center mt-1'>
+      ) : (
+        <div className='d-flex flex-column h-100 justify-content-between' style={{ marginTop: '45px'}}>
+          <div className={`w-100 custom-scroll ${showCompletedTask ? 'd-flex flex-column flex-grow-1' : ''}`} style={{ height: 'calc(100vh - 195px)' }}>
+            {!showCompletedTask && state.tasks.filter(task => task.status !== 'completed').length === 0 ? (
+              <div className='w-100 d-flex justify-content-center align-items-center flex-column py-2'>
+                <div className='secondary-color' style={{opacity: 0.8}}> No tasks found </div>
+              </div>            
+            ) : null}
             {state.tasks
               .filter(task => showCompletedTask ? task.status === 'completed' : task.status !== 'completed')
-              .map(task => {
-              return (
-                  <TaskView key={task.id} task={task} state={state} dispatch={dispatch} />
-              )
-            })}
+              .sort((a, b) => b.id - a.id)
+              .map(task => (
+                <TaskView key={task.id} task={task} state={state} dispatch={dispatch} />
+              ))}
           </div>
-          { showCompletedTask ? "" : (
-            <div className='position-relative mx-3 border rounded-3'>
-              <div className='p-3 d-flex gap-2 w-100'>
+          
+          { showCompletedTask ? null : (
+            <div className='position-absolute start-0 bottom-0 w-100 border-top border-secondary-color p-3'>
+              <div className='d-flex gap-2 w-100 '>
                 <form onSubmit={(e) => {
                   e.preventDefault();
                   const formData = new FormData(e.target);
@@ -127,12 +133,9 @@ function Task() {
                 </form>
               </div>
             </div>
-            )
-          }
-          
+          )}
         </div>
-      )
-      }
+      )}
     </div>
   )
 }

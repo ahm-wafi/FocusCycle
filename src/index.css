@@ -74,6 +74,10 @@ button {
   color: #9CA3AF;
 }
 
+.border-secondary-color{
+  border-color: #9CA3AF !important;
+}
+
 .secondary-color-button{
   background-color: #3f5575;
   color: #ffffff;
@@ -92,4 +96,38 @@ button {
 .hover-bg-light:hover {
   background-color: #1B467F;
   transition: background-color 0.2s ease;
+}
+
+.custom-scroll {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.25) rgba(255,255,255,0.06);
+}
+
+/* Chrome, Edge, Safari */
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.custom-scroll:hover::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.25);
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.4);
 }
